@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Gym | Fitness & Wellness</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="mygym.jpg" type="image/x-icon">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- GLightbox (Lightbox Gallery) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      padding-top: 72px; /* prevents fixed navbar covering content */
+    }
+
+    /* Fix anchor offset for fixed navbar */
+    section {
+      scroll-margin-top: 90px;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(255,0,0,0.6), rgba(255,0,0,0.6)),
+      url('https://images.unsplash.com/photo-1554284126-aa88f22d8b74?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      color: white;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 3rem 0;
+    }
+
+    .section-padding { padding: 80px 0; }
+
+    /* Scroll animation */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-section.show { opacity: 1; transform: translateY(0); }
+
+    .price-card {
+      border: 2px solid #dc3545;
+      transition: transform 0.3s;
+    }
+    .price-card:hover { transform: scale(1.05); }
+
+    /* Gallery hover */
+    .gallery-img {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      will-change: transform;
+      cursor: zoom-in;
+    }
+    .gallery-img:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 .75rem 1.5rem rgba(0,0,0,.15);
+    }
+
+    /* Floating WhatsApp button */
+    .wa-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 1050;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      background: #25D366;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .wa-float:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 30px rgba(0,0,0,.30);
+    }
+    .wa-float svg { width: 26px; height: 26px; }
+
+    /* ===== DARK MODE ===== */
+body.dark-mode {
+  background-color: #121212;
+  color: #eaeaea;
+}
+
+body.dark-mode .bg-light {
+  background-color: #1c1c1c !important;
+}
+
+body.dark-mode .card {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border-color: #dc3545;
+}
+
+body.dark-mode .navbar {
+  background-color: #111 !important;
+}
+
+body.dark-mode .nav-link {
+  color: #ddd !important;
+}
+
+body.dark-mode .nav-link:hover {
+  color: #dc3545 !important;
+}
+
+body.dark-mode footer {
+  background-color: #000 !important;
+}
+
+body.dark-mode input,
+body.dark-mode textarea {
+  background-color: #1f1f1f;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #aaa;
+}
+
+
+  
+
+/* ===== INTRO VIDEO SCREEN ===== */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.7s ease, visibility 0s linear 0.7s;
+}
+
+.intro.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro video {
+  width: 100%;
+  height: 100%;
+object-fit: cover;
+object-position: center top;
+}
+
+.intro::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: radial-gradient(transparent 40%, rgba(0,0,0,0.70) 100%);
+  pointer-events:none;
+}
+
+.intro .skip-btn {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  font-weight: 600;
+  transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  z-index: 2;
+}
+.intro .skip-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.75); }
+.intro .skip-btn:active { transform: translateY(0) scale(0.98); }
+
+  </style>
+</head>
+<body>
+
+<!-- INTRO VIDEO SCREEN -->
+<div class="intro" id="intro" aria-label="Intro video">
+  <video id="introVideo" playsinline muted autoplay preload="auto">
+    <!-- Replace intro.mp4 with your actual video file name/path -->
+    <source src="intro.mp4" type="video/mp4">
+  </video>
+  <button class="skip-btn" id="skipBtn" type="button">Skip</button>
+</div>
+
+
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-danger" href="#"><h1>MY GYM</h1></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+        <li class="nav-item ms-3">
+  <button id="darkToggle" class="btn btn-sm btn-danger">
+    🌙
+  </button>
+</li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">Fitness & Wellness Starts Here</h1>
+    <p class="lead">Train your body. Calm your mind. Transform your life.</p>
+    <a href="#pricing" class="btn btn-light btn-lg mt-3 me-2">Join Now</a>
+<a href="#gallery" class="btn btn-outline-light btn-lg mt-3">View Yoga Photos</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-padding fade-section" id="about">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="text-danger fw-bold">About My Gym</h2>
+        <p>
+          About MyGym Ragama
+
+Welcome to MyGym Ragama, your fitness destination in Ragama, Sri Lanka. At MyGym, we believe fitness is more than just building muscle — it’s about transforming your lifestyle, boosting your confidence, and unlocking your full potential.
+<p>
+With years of trusted service and a strong local presence, MyGym offers:
+</p>
+<p>
+🏋️‍♂️ Full-Service Gym Facilities — Equipped with modern strength training machines, cardio equipment, and free weights designed for all fitness levels.
+</p>
+<p>
+💃 Expert-Led Classes — Including targeted Zumba cardio sessions, Fat Burner Yoga techniques, and Meditation Yoga for holistic well-being.
+</p>
+<p>
+🗓️ Structured Weekly Schedule — Designed to fit your busy lifestyle with early morning and evening sessions, weekend classes, and guided programs for beginners to advanced athletes.
+<p>
+🤝 Personal Support & Motivation — Our trainers are dedicated to helping you reach your fitness goals safely and effectively.
+</p>
+Located at 69/F Siriwardana Road, Ragama, we’re here to support your fitness journey every step of the way. Call us for details on membership plans, class schedules, and special offers.
+<p></p>
+Join us today and start your transformation with MyGym Ragama!
+        </p>
+      </div>
+      <div class="col-md-6">
+        <img src="mygym.jpg"
+             class="img-fluid rounded" alt="gym">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="bg-light section-padding fade-section" id="programs">
+  <div class="container text-center">
+    <h2 class="fw-bold text-danger mb-5">Our Programs</h2>
+    <div class="row g-4">
+  <div class="col-md-3">
+    <h5>🏋️ Strength Training</h5>
+    <p>Build muscle safely and effectively.</p>
+  </div>
+  <div class="col-md-3">
+    <h5>🧘 Yoga & Wellness</h5>
+    <p>Improve flexibility and mental health.</p>
+  </div>
+  <div class="col-md-3">
+    <h5>💃 Zumba</h5>
+    <p>Dance cardio for fun fat-burning workouts.</p>
+  </div>
+  <div class="col-md-3">
+    <h5>🔥 Fat Loss</h5>
+    <p>Burn calories and boost confidence.</p>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section-padding fade-section" id="gallery">
+  <div class="container text-center">
+    <h2 class="fw-bold text-danger mb-5">Gallery</h2>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Yoga Class">
+        <img src="gym1.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Yoga Class">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1554298060-3e52b41e5b64?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Yoga Session">
+        <img src="gym2.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Yoga Session">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Group Yoga">
+        <img src="gym3.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Group Yoga">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
+        <img src="yoga1.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Relaxation Yoga">
+        <img src="yoga2.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Relaxation Yoga">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
+        <img src="yoga3.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
+        <img src="yoga4.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
+        <img src="yoga5.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
+      </a></div>
+      <div class="col-md-4">
+        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
+        <img src="yoga6.jpg"
+             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
+      </a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PRICING -->
+<section class="section-padding fade-section" id="pricing">
+  <div class="container text-center">
+    <h2 class="fw-bold text-danger mb-5">Membership & Pricing</h2>
+
+    <div class="row g-4 justify-content-center">
+
+      <div class="col-md-4">
+        <div class="card price-card p-4 h-100">
+          <h4 class="fw-bold">Monthly</h4>
+          <h2 class="text-danger">LKR 3,500</h2>
+          <p class="mb-1">Admission: LKR 1,000</p>
+          <p>Gym Access</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card price-card p-4 h-100">
+          <h4 class="fw-bold">3 Months</h4>
+          <h2 class="text-danger">LKR 6,500</h2>
+          <p>Gym + Classes</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card price-card p-4 h-100">
+          <h4 class="fw-bold">6 Months</h4>
+          <h2 class="text-danger">LKR 7,500</h2>
+          <p>Gym + Yoga + Zumba</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card price-card p-4 h-100">
+          <h4 class="fw-bold">1 Year</h4>
+          <h2 class="text-danger">LKR 9,500</h2>
+          <p>Unlimited Access</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card price-card p-4 h-100">
+          <h4 class="fw-bold">Couple Package</h4>
+          <h2 class="text-danger">LKR 15,000</h2>
+          <p>1 Year (2 Persons)</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card price-card p-4 h-100">
+          <h4 class="fw-bold">Personal Training</h4>
+          <h2 class="text-danger">LKR 5,000</h2>
+          <p>Customized Training Plan</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="bg-light section-padding fade-section" id="schedule">
+  <div class="container">
+    <h2 class="text-danger fw-bold text-center mb-4">Schedule</h2>
+
+    <div class="row g-4">
+      <!-- GYM HOURS -->
+      <div class="col-md-6">
+        <div class="card p-4 h-100">
+          <h4 class="fw-bold mb-3">🏋️ Gym Open Hours</h4>
+
+          <div class="mb-3">
+            <h6 class="text-danger fw-bold mb-1">Weekdays</h6>
+            <ul class="list-group">
+              <li class="list-group-item">05:00 AM – 11:00 AM</li>
+              <li class="list-group-item">04:00 PM – 10:00 PM</li>
+            </ul>
+          </div>
+
+          <div>
+            <h6 class="text-danger fw-bold mb-1">Saturday</h6>
+            <ul class="list-group">
+              <li class="list-group-item">08:00 AM – 11:00 AM</li>
+              <li class="list-group-item">04:00 PM – 08:00 PM</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLASSES -->
+      <div class="col-md-6">
+        <div class="card p-4 h-100">
+          <h4 class="fw-bold mb-3">💃 Classes</h4>
+
+<!-- ZUMBA -->
+<div class="mb-4">
+  <h6 class="text-danger fw-bold mb-1">💃 Zumba (Cardio)</h6>
+  <ul class="list-group">
+    <li class="list-group-item">
+      Wednesday — <strong>08:00 AM – 09:00 AM</strong>
+    </li>
+  </ul>
+</div>
+
+<!-- FAT BURNER YOGA -->
+<div class="mb-4">
+  <h6 class="text-danger fw-bold mb-1">
+    🔥 Fat Burner Yoga (Yoga Techniques)
+  </h6>
+  <ul class="list-group">
+    <li class="list-group-item">
+      Monday — 08:00 AM – 09:00 AM | 07:00 PM – 08:00 PM
+    </li>
+    <li class="list-group-item">
+      Wednesday — 07:00 PM – 08:00 PM
+    </li>
+    <li class="list-group-item">
+      Friday — 08:00 AM – 09:00 AM | 07:00 PM – 08:00 PM
+    </li>
+  </ul>
+</div>
+
+<!-- MEDITATION YOGA -->
+<div>
+  <h6 class="text-danger fw-bold mb-1">🧘 Meditation Yoga</h6>
+  <ul class="list-group">
+    <li class="list-group-item">
+      Saturday — 06:30 PM – 08:00 PM
+    </li>
+  </ul>
+</div>
+
+
+          <!-- If you have another Yoga schedule, replace the Yoga list above with your new times -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTACT -->
+<section class="section-padding fade-section" id="contact">
+  <div class="container">
+    <h2 class="text-danger fw-bold text-center mb-4">Contact Us</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form id="contactForm" class="needs-validation" novalidate>
+          <input type="text" name="name" class="form-control mb-3" placeholder="Your Name" required>
+          <div class="invalid-feedback mb-2">Please enter your name.</div>
+
+          <input type="email" name="email" class="form-control mb-3" placeholder="Email" required>
+          <div class="invalid-feedback mb-2">Please enter a valid email.</div>
+
+          <textarea name="message" class="form-control mb-3" placeholder="Message" rows="5" required></textarea>
+          <div class="invalid-feedback mb-2">Please type a message.</div>
+
+          <button class="btn btn-danger w-100" type="submit">
+            <span class="spinner-border spinner-border-sm me-2 d-none" id="formSpinner" aria-hidden="true"></span>
+            <span id="formBtnText">Send Message</span>
+          </button>
+
+          <p class="text-muted small mt-3 mb-0">
+            Tip: Replace <code>yourFormID</code> with your Formspree ID to receive emails.
+          </p>
+        </form>
+
+        <div class="alert alert-success mt-3 d-none" id="formSuccess">
+          ✅ Thanks! Your message has been sent.
+        </div>
+        <div class="alert alert-danger mt-3 d-none" id="formError">
+          ❌ Sorry — something went wrong. Try again or contact us on WhatsApp.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<a class="wa-float" href="https://wa.me/94765519293?text=Hi%20My%20Gym!%20I%20want%20to%20join%20a%20membership." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <path fill="#fff" d="M19.11 17.04c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.15-.42-2.19-1.35-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.41.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.47-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27 0 1.34.98 2.63 1.11 2.81.14.18 1.93 2.95 4.69 4.13.66.28 1.17.45 1.57.58.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32Z"/>
+    <path fill="#fff" d="M26.67 5.33A14.92 14.92 0 0 0 16.02 1C7.86 1 1.23 7.64 1.23 15.8c0 2.61.68 5.16 1.98 7.41L1 31l7.98-2.1a14.75 14.75 0 0 0 7.04 1.79h.01c8.16 0 14.8-6.64 14.8-14.8 0-3.95-1.54-7.67-4.16-10.56Zm-10.65 22.7h-.01a12.25 12.25 0 0 1-6.25-1.72l-.45-.27-4.73 1.24 1.26-4.61-.29-.47a12.27 12.27 0 0 1-1.88-6.4c0-6.78 5.52-12.3 12.3-12.3 3.29 0 6.37 1.28 8.69 3.6a12.22 12.22 0 0 1 3.61 8.69c0 6.78-5.52 12.24-12.25 12.24Z"/>
+  </svg>
+</a>
+
+
+<!-- FOOTER -->
+<footer class="bg-danger text-white text-center p-3">
+  © 2026 My Gym | Fitness & Wellness
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const sections = document.querySelectorAll('.fade-section');
+
+  const revealOnScroll = () => {
+    const triggerBottom = window.innerHeight * 0.85;
+
+    sections.forEach(section => {
+      const boxTop = section.getBoundingClientRect().top;
+
+      if (boxTop < triggerBottom) {
+        section.classList.add('show');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+</script>
+
+
+<!-- GLightbox JS -->
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  // Lightbox init
+  const lightbox = GLightbox({
+    selector: '.glightbox',
+    touchNavigation: true,
+    loop: true,
+    zoomable: true,
+    openEffect: 'zoom',
+    closeEffect: 'fade'
+  });
+</script>
+
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.querySelector('input[name="name"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const message = document.querySelector('textarea[name="message"]').value;
+
+    const text =
+      "Hi My Gym!%0A" +
+      "Name: " + name + "%0A" +
+      "Email: " + email + "%0A" +
+      "Message: " + message;
+
+    const whatsappURL =
+      "https://wa.me/94765519293?text=" + text;
+
+    window.open(whatsappURL, "_blank");
+  });
+</script>
+
+<script>
+  const toggle = document.getElementById("darkToggle");
+
+  // load saved mode
+  if (localStorage.getItem("darkMode") === "on") {
+    document.body.classList.add("dark-mode");
+  }
+
+  toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+      localStorage.setItem("darkMode", "on");
+    } else {
+      localStorage.setItem("darkMode", "off");
+    }
+  });
+</script>
+
+
+
+
+<!-- INTRO VIDEO SCRIPT -->
+<script>
+  (function () {
+    const intro = document.getElementById("intro");
+    const video = document.getElementById("introVideo");
+    const skipBtn = document.getElementById("skipBtn");
+
+    if (!intro || !video || !skipBtn) return;
+
+    const MIN_SHOW_MS = 1200;   // minimum time to keep intro visible
+    const FALLBACK_END_MS = 6500; // if autoplay blocked / error, hide after this
+
+    let startedAt = Date.now();
+    let hidden = false;
+
+    function hideIntro() {
+      if (hidden) return;
+      hidden = true;
+
+      const elapsed = Date.now() - startedAt;
+      const wait = Math.max(0, MIN_SHOW_MS - elapsed);
+
+      setTimeout(() => {
+        intro.classList.add("hide");
+        try { video.pause(); } catch (e) {}
+      }, wait);
+    }
+
+    // Hide when video ends
+    video.addEventListener("ended", hideIntro);
+
+    // Skip button
+    skipBtn.addEventListener("click", hideIntro);
+
+    // Try to autoplay (muted helps)
+    (async () => {
+      try {
+        await video.play();
+      } catch (e) {
+        // Autoplay blocked: let user control, still keep skip button
+        video.controls = true;
+      }
+    })();
+
+    // Safety: never trap user on intro
+    setTimeout(hideIntro, FALLBACK_END_MS);
+
+    // If video errors, hide intro
+    video.addEventListener("error", hideIntro);
+  })();
+</script>
+
+</body>
+</html>
