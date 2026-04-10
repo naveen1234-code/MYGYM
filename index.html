@@ -2,584 +2,847 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Gym | Fitness & Wellness</title>
+  <title>MyGym Ragama | Premium Fitness Experience</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="mygym.jpg" type="image/x-icon">
+  <link rel="icon" href="mygym.jpg" type="image/x-icon">
 
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- GLightbox (Lightbox Gallery) -->
+  <!-- GLightbox -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      padding-top: 72px; /* prevents fixed navbar covering content */
-    }
-
-    /* Fix anchor offset for fixed navbar */
-    section {
-      scroll-margin-top: 90px;
-    }
-
-    .hero {
-      background: linear-gradient(rgba(255,0,0,0.6), rgba(255,0,0,0.6)),
-      url('https://images.unsplash.com/photo-1554284126-aa88f22d8b74?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-      color: white;
-      min-height: 90vh;
-      display: flex;
-      align-items: center;
-      padding: 3rem 0;
-    }
-
-    .section-padding { padding: 80px 0; }
-
-    /* Scroll animation */
-    .fade-section {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .fade-section.show { opacity: 1; transform: translateY(0); }
-
-    .price-card {
-      border: 2px solid #dc3545;
-      transition: transform 0.3s;
-    }
-    .price-card:hover { transform: scale(1.05); }
-
-    /* Gallery hover */
-    .gallery-img {
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      will-change: transform;
-      cursor: zoom-in;
-    }
-    .gallery-img:hover {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: 0 .75rem 1.5rem rgba(0,0,0,.15);
-    }
-
-    /* Floating WhatsApp button */
-    .wa-float {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 1050;
-      width: 56px;
-      height: 56px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      text-decoration: none;
-      background: #25D366;
-      box-shadow: 0 10px 25px rgba(0,0,0,.25);
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .wa-float:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 14px 30px rgba(0,0,0,.30);
-    }
-    .wa-float svg { width: 26px; height: 26px; }
-
-    /* ===== DARK MODE ===== */
-body.dark-mode {
-  background-color: #121212;
-  color: #eaeaea;
-}
-
-body.dark-mode .bg-light {
-  background-color: #1c1c1c !important;
-}
-
-body.dark-mode .card {
-  background-color: #1f1f1f;
-  color: #ffffff;
-  border-color: #dc3545;
-}
-
-body.dark-mode .navbar {
-  background-color: #111 !important;
-}
-
-body.dark-mode .nav-link {
-  color: #ddd !important;
-}
-
-body.dark-mode .nav-link:hover {
-  color: #dc3545 !important;
-}
-
-body.dark-mode footer {
-  background-color: #000 !important;
-}
-
-body.dark-mode input,
-body.dark-mode textarea {
-  background-color: #1f1f1f;
-  color: #fff;
-  border: 1px solid #444;
-}
-
-body.dark-mode input::placeholder,
-body.dark-mode textarea::placeholder {
-  color: #aaa;
-}
-
-
-  
-
-/* ===== INTRO VIDEO SCREEN ===== */
-.intro {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: #000;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.7s ease, visibility 0s linear 0.7s;
-}
-
-.intro.hide {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.intro video {
-  width: 100%;
-  height: 100%;
-object-fit: cover;
-object-position: center top;
-}
-
-.intro::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: radial-gradient(transparent 40%, rgba(0,0,0,0.70) 100%);
-  pointer-events:none;
-}
-
-.intro .skip-btn {
-  position: absolute;
-  bottom: 28px;
-  right: 28px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.55);
-  background: rgba(0,0,0,0.45);
-  color: #fff;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  font-weight: 600;
-  transition: transform .15s ease, border-color .15s ease, background .15s ease;
-  z-index: 2;
-}
-.intro .skip-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.75); }
-.intro .skip-btn:active { transform: translateY(0) scale(0.98); }
-
-  </style>
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- INTRO VIDEO SCREEN -->
-<div class="intro" id="intro" aria-label="Intro video">
-  <video id="introVideo" playsinline muted autoplay preload="auto">
-    <!-- Replace intro.mp4 with your actual video file name/path -->
-    <source src="intro.mp4" type="video/mp4">
-  </video>
-  <button class="skip-btn" id="skipBtn" type="button">Skip</button>
-</div>
-
-
-
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow fixed-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-danger" href="#"><h1>MY GYM</h1></a>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-premium fixed-top">
+  <div class="container-xl-custom nav-inner-wrap">
+    <a class="navbar-brand-premium" href="#home">
+      <span class="brand-top">Premium Fitness</span>
+      <span class="brand-main">MyGym</span>
+    </a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
-        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
-        <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
-        <li class="nav-item ms-3">
-  <button id="darkToggle" class="btn btn-sm btn-danger">
-    🌙
-  </button>
-</li>
 
-      </ul>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <div class="nav-desktop-right ms-auto">
+        <ul class="navbar-nav nav-links-top">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#standard">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#pricing">Membership</a></li>
+          <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <a href="#pricing" class="btn-premium btn-premium-primary">Join Now</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="container text-center">
-    <h1 class="display-4 fw-bold">Fitness & Wellness Starts Here</h1>
-    <p class="lead">Train your body. Calm your mind. Transform your life.</p>
-    <a href="#pricing" class="btn btn-light btn-lg mt-3 me-2">Join Now</a>
-<a href="#gallery" class="btn btn-outline-light btn-lg mt-3">View Yoga Photos</a>
+<!-- PRE-HERO -->
+<section class="prehero reveal" id="home">
+  <div class="container-xl-custom">
+    <div class="prehero-inner">
+      <div class="prehero-label">MyGym Ragama</div>
+      <h1 class="prehero-title">Built For Discipline.<br>Designed For Transformation.</h1>
+      <p class="prehero-sub">
+        Premium strength training, yoga, cardio, and guided fitness sessions in Ragama.
+      </p>
+    </div>
+    <div class="prehero-word">MYGYM</div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="section-padding fade-section" id="about">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-6">
-        <h2 class="text-danger fw-bold">About My Gym</h2>
-        <p>
-          About MyGym Ragama
+<!-- HERO -->
+<section class="hero-v10">
+  <div class="container-xl-custom">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6">
+        <div class="hero-content reveal">
+          <div class="hero-badge">Ragama’s Premium Fitness Destination</div>
 
-Welcome to MyGym Ragama, your fitness destination in Ragama, Sri Lanka. At MyGym, we believe fitness is more than just building muscle — it’s about transforming your lifestyle, boosting your confidence, and unlocking your full potential.
-<p>
-With years of trusted service and a strong local presence, MyGym offers:
-</p>
-<p>
-🏋️‍♂️ Full-Service Gym Facilities — Equipped with modern strength training machines, cardio equipment, and free weights designed for all fitness levels.
-</p>
-<p>
-💃 Expert-Led Classes — Including targeted Zumba cardio sessions, Fat Burner Yoga techniques, and Meditation Yoga for holistic well-being.
-</p>
-<p>
-🗓️ Structured Weekly Schedule — Designed to fit your busy lifestyle with early morning and evening sessions, weekend classes, and guided programs for beginners to advanced athletes.
-<p>
-🤝 Personal Support & Motivation — Our trainers are dedicated to helping you reach your fitness goals safely and effectively.
-</p>
-Located at 69/F Siriwardana Road, Ragama, we’re here to support your fitness journey every step of the way. Call us for details on membership plans, class schedules, and special offers.
-<p></p>
-Join us today and start your transformation with MyGym Ragama!
-        </p>
+          <h2 class="hero-title">
+            Train With <span>Power.</span><br>
+            Transform With Discipline.
+          </h2>
+
+          <p class="hero-subtext">
+            At MyGym Ragama, every session is built around progress. From strength training and fat loss to yoga, cardio, and guided support, we help you build a stronger body, a sharper mindset, and a better routine.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#pricing" class="btn-premium btn-premium-primary">Join Membership</a>
+            <a href="#programs" class="btn-premium btn-premium-secondary">Explore Programs</a>
+          </div>
+
+          <div class="hero-mini-features">
+            <div class="hero-mini-item">Strength Training</div>
+            <div class="hero-mini-item">Yoga & Meditation</div>
+            <div class="hero-mini-item">Zumba Cardio</div>
+            <div class="hero-mini-item">Morning & Evening Access</div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
-        <img src="mygym.jpg"
-             class="img-fluid rounded" alt="gym">
+
+      <div class="col-lg-6">
+        <div class="hero-visual-wrap reveal">
+          <div class="hero-image-main">
+            <img src="mygym.jpg" alt="MyGym Ragama">
+          </div>
+
+          <div class="floating-card glass-panel hours-card">
+            <h6>Open Hours</h6>
+            <p>
+              Weekdays<br>
+              <strong>05:00 AM – 11:00 AM</strong><br>
+              <strong>04:00 PM – 10:00 PM</strong>
+            </p>
+          </div>
+
+          <div class="floating-card glass-panel plan-card">
+            <h6>Popular Plan</h6>
+            <p>
+              Monthly Membership<br>
+              <strong style="font-size:1.45rem;">LKR 3,500</strong>
+            </p>
+          </div>
+
+          <div class="floating-card glass-panel class-card">
+            <h6>Class Access</h6>
+            <ul>
+              <li>Yoga</li>
+              <li>Zumba</li>
+              <li>Cardio Sessions</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<section class="trust-strip">
+  <div class="container-xl-custom">
+    <div class="trust-grid">
+      <div class="trust-card glass-panel reveal">
+        <div class="trust-card-icon">⛓</div>
+        <h5>Modern Training Setup</h5>
+        <p>A focused environment built for strength, fitness, and consistency.</p>
+      </div>
+
+      <div class="trust-card glass-panel reveal">
+        <div class="trust-card-icon">⚡</div>
+        <h5>Structured Weekly Classes</h5>
+        <p>Enjoy guided yoga, cardio, and group sessions that keep training engaging.</p>
+      </div>
+
+      <div class="trust-card glass-panel reveal">
+        <div class="trust-card-icon">⏱</div>
+        <h5>Flexible Session Times</h5>
+        <p>Morning and evening access designed to fit around your routine.</p>
+      </div>
+
+      <div class="trust-card glass-panel reveal">
+        <div class="trust-card-icon">◆</div>
+        <h5>Trusted Local Gym</h5>
+        <p>A fitness destination proudly serving the Ragama community.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MYGYM STANDARD -->
+<section class="section-shell" id="standard">
+  <div class="container-xl-custom">
+    <div class="standard-grid">
+      <div class="standard-media reveal">
+        <img src="gym1.jpg" alt="Training at MyGym">
+      </div>
+
+      <div class="standard-content glass-panel reveal">
+        <div class="section-kicker">The MyGym Standard</div>
+        <h2 class="section-title">A Training Environment Built For Real Progress.</h2>
+
+        <p>
+          MyGym Ragama is designed for people who want more than casual workouts. We provide a disciplined, motivating space where members can train with purpose, improve consistency, and move closer to real results.
+        </p>
+
+        <p>
+          With modern gym facilities, structured classes, and flexible opening hours, MyGym supports every stage of your fitness journey — whether your goal is strength, fat loss, flexibility, confidence, or long-term transformation.
+        </p>
+
+        <div class="standard-highlights">
+          <div class="standard-highlight">
+            <h6>Focused Environment</h6>
+            <p>Train in a space built to support discipline, energy, and progress.</p>
+          </div>
+
+          <div class="standard-highlight">
+            <h6>Guided Class Experience</h6>
+            <p>Add structure to your week with yoga, cardio, and instructor-led sessions.</p>
+          </div>
+
+          <div class="standard-highlight">
+            <h6>Flexible Access</h6>
+            <p>Stay consistent with both morning and evening training hours.</p>
+          </div>
+        </div>
+
+        <a href="#pricing" class="btn-premium btn-premium-primary">View Membership Plans</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PROGRAMS -->
-<section class="bg-light section-padding fade-section" id="programs">
-  <div class="container text-center">
-    <h2 class="fw-bold text-danger mb-5">Our Programs</h2>
-    <div class="row g-4">
-  <div class="col-md-3">
-    <h5>🏋️ Strength Training</h5>
-    <p>Build muscle safely and effectively.</p>
-  </div>
-  <div class="col-md-3">
-    <h5>🧘 Yoga & Wellness</h5>
-    <p>Improve flexibility and mental health.</p>
-  </div>
-  <div class="col-md-3">
-    <h5>💃 Zumba</h5>
-    <p>Dance cardio for fun fat-burning workouts.</p>
-  </div>
-  <div class="col-md-3">
-    <h5>🔥 Fat Loss</h5>
-    <p>Burn calories and boost confidence.</p>
-  </div>
-</div>
+<section class="section-shell" id="programs">
+  <div class="container-xl-custom">
+    <div class="reveal">
+      <div class="section-kicker">Programs</div>
+      <h2 class="section-title">Training Options Built Around Strength, Movement, And Transformation.</h2>
+      <p class="section-subtext">
+        Whether you want to build muscle, improve stamina, lose weight, or create a healthier routine, MyGym offers programs that help you train with more direction and consistency.
+      </p>
+    </div>
 
-  </div>
-</section>
+    <div class="programs-grid">
+      <div class="program-card glass-panel program-span-4 reveal">
+        <div class="program-icon">🏋️</div>
+        <h4>Strength Training</h4>
+        <p>
+          Build power with structure. Train using weights, machines, and focused routines designed to improve strength, form, and confidence.
+        </p>
+        <ul class="program-points">
+          <li>Muscle development</li>
+          <li>Better form</li>
+          <li>Strength progression</li>
+        </ul>
+      </div>
 
-<!-- GALLERY -->
-<section class="section-padding fade-section" id="gallery">
-  <div class="container text-center">
-    <h2 class="fw-bold text-danger mb-5">Gallery</h2>
+      <div class="program-card glass-panel program-span-4 reveal">
+        <div class="program-icon">🔥</div>
+        <h4>Fat Loss Training</h4>
+        <p>
+          Train for visible change. Improve endurance, burn calories, and stay consistent with a routine focused on energy and progress.
+        </p>
+        <ul class="program-points">
+          <li>Cardio support</li>
+          <li>Weight control</li>
+          <li>Better consistency</li>
+        </ul>
+      </div>
 
-    <div class="row g-4">
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Yoga Class">
-        <img src="gym1.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Yoga Class">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1554298060-3e52b41e5b64?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Yoga Session">
-        <img src="gym2.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Yoga Session">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Group Yoga">
-        <img src="gym3.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Group Yoga">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
-        <img src="yoga1.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Relaxation Yoga">
-        <img src="yoga2.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Relaxation Yoga">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
-        <img src="yoga3.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
-        <img src="yoga4.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
-        <img src="yoga5.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
-      </a></div>
-      <div class="col-md-4">
-        <a href="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1800&q=85" class="glightbox" data-gallery="yoga" data-title="Wellness Yoga">
-        <img src="yoga6.jpg"
-             class="img-fluid rounded shadow gallery-img" alt="Wellness Yoga">
-      </a></div>
+      <div class="program-card glass-panel program-span-4 reveal">
+        <div class="program-icon">💃</div>
+        <h4>Zumba Cardio</h4>
+        <p>
+          High-energy movement that keeps you engaged. A fun and active way to improve fitness while enjoying a motivating group atmosphere.
+        </p>
+        <ul class="program-points">
+          <li>High energy</li>
+          <li>Group motivation</li>
+          <li>Great for stamina</li>
+        </ul>
+      </div>
+
+      <div class="program-card glass-panel program-span-6 reveal">
+        <div class="program-icon">🧘</div>
+        <h4>Yoga & Meditation</h4>
+        <p>
+          Balance your body and mind. Improve flexibility, reduce stress, and bring more control and recovery into your weekly routine.
+        </p>
+        <ul class="program-points">
+          <li>Flexibility</li>
+          <li>Relaxation</li>
+          <li>Mind-body balance</li>
+        </ul>
+      </div>
+
+      <div class="program-card glass-panel program-span-6 reveal">
+        <div class="program-icon">🎯</div>
+        <h4>Personal Training</h4>
+        <p>
+          Get a more focused path to your goals. Ideal for members who want customized guidance, accountability, and stronger results.
+        </p>
+        <ul class="program-points">
+          <li>Direct support</li>
+          <li>Personalized approach</li>
+          <li>Goal-based progress</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
-
-
-<!-- PRICING -->
-<section class="section-padding fade-section" id="pricing">
-  <div class="container text-center">
-    <h2 class="fw-bold text-danger mb-5">Membership & Pricing</h2>
-
-    <div class="row g-4 justify-content-center">
-
-      <div class="col-md-4">
-        <div class="card price-card p-4 h-100">
-          <h4 class="fw-bold">Monthly</h4>
-          <h2 class="text-danger">LKR 3,500</h2>
-          <p class="mb-1">Admission: LKR 1,000</p>
-          <p>Gym Access</p>
+<!-- WHY MEMBERS CHOOSE MYGYM -->
+<section class="section-shell" id="why-mygym">
+  <div class="container-xl-custom">
+    <div class="row align-items-center g-4 mb-5">
+      <div class="col-lg-5">
+        <div class="reveal">
+          <div class="section-kicker">Why MyGym</div>
+          <h2 class="section-title">Serious Training. Supportive Atmosphere. Better Consistency.</h2>
+          <p class="section-subtext">
+            MyGym brings together the things that matter most in a fitness journey: the right environment, flexible training hours, structured class options, and a stronger sense of commitment.
+          </p>
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="card price-card p-4 h-100">
-          <h4 class="fw-bold">3 Months</h4>
-          <h2 class="text-danger">LKR 6,500</h2>
-          <p>Gym + Classes</p>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card price-card p-4 h-100">
-          <h4 class="fw-bold">6 Months</h4>
-          <h2 class="text-danger">LKR 7,500</h2>
-          <p>Gym + Yoga + Zumba</p>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card price-card p-4 h-100">
-          <h4 class="fw-bold">1 Year</h4>
-          <h2 class="text-danger">LKR 9,500</h2>
-          <p>Unlimited Access</p>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card price-card p-4 h-100">
-          <h4 class="fw-bold">Couple Package</h4>
-          <h2 class="text-danger">LKR 15,000</h2>
-          <p>1 Year (2 Persons)</p>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card price-card p-4 h-100">
-          <h4 class="fw-bold">Personal Training</h4>
-          <h2 class="text-danger">LKR 5,000</h2>
-          <p>Customized Training Plan</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- SCHEDULE -->
-<section class="bg-light section-padding fade-section" id="schedule">
-  <div class="container">
-    <h2 class="text-danger fw-bold text-center mb-4">Schedule</h2>
-
-    <div class="row g-4">
-      <!-- GYM HOURS -->
-      <div class="col-md-6">
-        <div class="card p-4 h-100">
-          <h4 class="fw-bold mb-3">🏋️ Gym Open Hours</h4>
-
-          <div class="mb-3">
-            <h6 class="text-danger fw-bold mb-1">Weekdays</h6>
-            <ul class="list-group">
-              <li class="list-group-item">05:00 AM – 11:00 AM</li>
-              <li class="list-group-item">04:00 PM – 10:00 PM</li>
-            </ul>
-          </div>
-
-          <div>
-            <h6 class="text-danger fw-bold mb-1">Saturday</h6>
-            <ul class="list-group">
-              <li class="list-group-item">08:00 AM – 11:00 AM</li>
-              <li class="list-group-item">04:00 PM – 08:00 PM</li>
-            </ul>
+      <div class="col-lg-7">
+        <div class="glass-panel reveal why-hero-panel">
+          <div class="why-panel-glow"></div>
+          <div class="why-panel-content">
+            <span class="why-panel-badge">Built for Results</span>
+            <h3>A gym experience designed to keep you moving forward.</h3>
+            <p>
+              From your first session to long-term progress, MyGym is designed to help members train with more confidence, structure, and motivation.
+            </p>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- CLASSES -->
-      <div class="col-md-6">
-        <div class="card p-4 h-100">
-          <h4 class="fw-bold mb-3">💃 Classes</h4>
+    <div class="why-grid">
+      <div class="why-card glass-panel reveal">
+        <div class="why-icon">⚙</div>
+        <h5>Modern Equipment</h5>
+        <p>Train with the equipment and space needed for effective strength and fitness work.</p>
+      </div>
 
-<!-- ZUMBA -->
-<div class="mb-4">
-  <h6 class="text-danger fw-bold mb-1">💃 Zumba (Cardio)</h6>
-  <ul class="list-group">
-    <li class="list-group-item">
-      Wednesday — <strong>08:00 AM – 09:00 AM</strong>
-    </li>
-  </ul>
-</div>
+      <div class="why-card glass-panel reveal">
+        <div class="why-icon">⏰</div>
+        <h5>Flexible Time Slots</h5>
+        <p>Morning and evening sessions make it easier to stay committed even with a busy schedule.</p>
+      </div>
 
-<!-- FAT BURNER YOGA -->
-<div class="mb-4">
-  <h6 class="text-danger fw-bold mb-1">
-    🔥 Fat Burner Yoga (Yoga Techniques)
-  </h6>
-  <ul class="list-group">
-    <li class="list-group-item">
-      Monday — 08:00 AM – 09:00 AM | 07:00 PM – 08:00 PM
-    </li>
-    <li class="list-group-item">
-      Wednesday — 07:00 PM – 08:00 PM
-    </li>
-    <li class="list-group-item">
-      Friday — 08:00 AM – 09:00 AM | 07:00 PM – 08:00 PM
-    </li>
-  </ul>
-</div>
+      <div class="why-card glass-panel reveal">
+        <div class="why-icon">✦</div>
+        <h5>Multi-Discipline Training</h5>
+        <p>Access strength training, yoga, cardio sessions, and guided wellness activities in one place.</p>
+      </div>
 
-<!-- MEDITATION YOGA -->
-<div>
-  <h6 class="text-danger fw-bold mb-1">🧘 Meditation Yoga</h6>
-  <ul class="list-group">
-    <li class="list-group-item">
-      Saturday — 06:30 PM – 08:00 PM
-    </li>
-  </ul>
-</div>
+      <div class="why-card glass-panel reveal">
+        <div class="why-icon">▲</div>
+        <h5>Motivating Environment</h5>
+        <p>A focused gym atmosphere helps you stay serious about your goals.</p>
+      </div>
 
+      <div class="why-card glass-panel reveal">
+        <div class="why-icon">➜</div>
+        <h5>Guided Class Structure</h5>
+        <p>Weekly sessions provide more direction, energy, and variety beyond solo workouts.</p>
+      </div>
 
-          <!-- If you have another Yoga schedule, replace the Yoga list above with your new times -->
+      <div class="why-card glass-panel reveal">
+        <div class="why-icon">◎</div>
+        <h5>Local Convenience</h5>
+        <p>A trusted fitness space built for members in and around Ragama.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIUM PRICING -->
+<section class="section-shell pricing-section" id="pricing">
+  <div class="container-xl-custom">
+    <div class="text-center reveal mb-5">
+      <div class="section-kicker justify-content-center">Membership</div>
+      <h2 class="section-title mx-auto">Choose The Plan That Matches Your Commitment.</h2>
+      <p class="section-subtext mx-auto">
+        From flexible short-term access to long-term commitment plans, MyGym offers options for new members, regular trainees, couples, and personalized coaching.
+      </p>
+    </div>
+
+    <div class="pricing-featured-grid">
+      <div class="pricing-card glass-panel reveal">
+        <span class="pricing-label">Starter Plan</span>
+        <h3>Monthly Membership</h3>
+        <div class="pricing-price">LKR 3,500</div>
+        <div class="pricing-note">Admission Fee: <strong>LKR 1,000</strong></div>
+
+        <ul class="pricing-points">
+          <li>Full gym access</li>
+          <li>Ideal for getting started</li>
+          <li>Flexible monthly commitment</li>
+        </ul>
+
+        <a href="#contact" class="btn-premium btn-premium-secondary w-100">Start Monthly Plan</a>
+      </div>
+
+      <div class="pricing-card pricing-card-featured glass-panel reveal">
+        <span class="pricing-badge">Most Popular</span>
+        <span class="pricing-label">Best Value</span>
+        <h3>6 Months Membership</h3>
+        <div class="pricing-price">LKR 7,500</div>
+        <div class="pricing-note">Built for stronger long-term consistency</div>
+
+        <ul class="pricing-points">
+          <li>Gym access included</li>
+          <li>Yoga and Zumba access</li>
+          <li>Better value for committed training</li>
+        </ul>
+
+        <a href="#contact" class="btn-premium btn-premium-primary w-100">Choose 6 Months</a>
+      </div>
+
+      <div class="pricing-card glass-panel reveal">
+        <span class="pricing-label">Elite Commitment</span>
+        <h3>1 Year Membership</h3>
+        <div class="pricing-price">LKR 9,500</div>
+        <div class="pricing-note">Best for serious long-term training</div>
+
+        <ul class="pricing-points">
+          <li>Unlimited gym access</li>
+          <li>Strong long-term value</li>
+          <li>Built for routine and commitment</li>
+        </ul>
+
+        <a href="#contact" class="btn-premium btn-premium-secondary w-100">Go Annual</a>
+      </div>
+    </div>
+
+    <div class="pricing-secondary-grid mt-4">
+      <div class="pricing-mini-card glass-panel reveal">
+        <h5>3 Months Membership</h5>
+        <div class="pricing-mini-price">LKR 6,500</div>
+        <p>Gym access with class benefits for a stronger short-term routine.</p>
+      </div>
+
+      <div class="pricing-mini-card glass-panel reveal">
+        <h5>Couple Package</h5>
+        <div class="pricing-mini-price">LKR 15,000</div>
+        <p>1-year membership plan for 2 persons.</p>
+      </div>
+
+      <div class="pricing-mini-card glass-panel reveal">
+        <h5>Personal Training</h5>
+        <div class="pricing-mini-price">LKR 5,000</div>
+        <p>Customized guidance for more focused progress.</p>
+      </div>
+    </div>
+
+    <div class="pricing-help glass-panel reveal">
+      <strong>Not sure which plan fits you best?</strong>
+      <span>Contact us on WhatsApp and we’ll help you choose the right option.</span>
+    </div>
+  </div>
+</section>
+
+<!-- WEEKLY SCHEDULE -->
+<section class="section-shell" id="schedule">
+  <div class="container-xl-custom">
+    <div class="text-center reveal mb-5">
+      <div class="section-kicker justify-content-center">Schedule</div>
+      <h2 class="section-title mx-auto">Train When It Fits. Join Classes When You Want Structure.</h2>
+      <p class="section-subtext mx-auto">
+        With flexible gym access and weekly guided sessions, MyGym helps you build a routine that works with your time and your goals.
+      </p>
+    </div>
+
+    <div class="schedule-grid">
+      <div class="schedule-panel glass-panel reveal">
+        <div class="schedule-panel-top">
+          <span class="schedule-tag">Gym Hours</span>
+          <h3>Open Hours</h3>
+        </div>
+
+        <div class="schedule-block">
+          <div class="schedule-day">Weekdays</div>
+          <div class="schedule-times">
+            <span>05:00 AM – 11:00 AM</span>
+            <span>04:00 PM – 10:00 PM</span>
+          </div>
+        </div>
+
+        <div class="schedule-block">
+          <div class="schedule-day">Saturday</div>
+          <div class="schedule-times">
+            <span>08:00 AM – 11:00 AM</span>
+            <span>04:00 PM – 08:00 PM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-panel glass-panel reveal">
+        <div class="schedule-panel-top">
+          <span class="schedule-tag">Guided Sessions</span>
+          <h3>Classes & Sessions</h3>
+        </div>
+
+        <div class="class-item">
+          <div class="class-title-row">
+            <h5>Zumba (Cardio)</h5>
+            <div class="class-tags">
+              <span>Morning</span>
+              <span>Guided</span>
+            </div>
+          </div>
+          <p>Wednesday</p>
+          <div class="class-time-pills">
+            <span>08:00 AM – 09:00 AM</span>
+          </div>
+        </div>
+
+        <div class="class-item">
+          <div class="class-title-row">
+            <h5>Fat Burner Yoga</h5>
+            <div class="class-tags">
+              <span>Morning</span>
+              <span>Evening</span>
+            </div>
+          </div>
+          <p>Monday</p>
+          <div class="class-time-pills">
+            <span>08:00 AM – 09:00 AM</span>
+            <span>07:00 PM – 08:00 PM</span>
+          </div>
+          <p>Wednesday</p>
+          <div class="class-time-pills">
+            <span>07:00 PM – 08:00 PM</span>
+          </div>
+          <p>Friday</p>
+          <div class="class-time-pills">
+            <span>08:00 AM – 09:00 AM</span>
+            <span>07:00 PM – 08:00 PM</span>
+          </div>
+        </div>
+
+        <div class="class-item">
+          <div class="class-title-row">
+            <h5>Meditation Yoga</h5>
+            <div class="class-tags">
+              <span>Weekend</span>
+              <span>Evening</span>
+            </div>
+          </div>
+          <p>Saturday</p>
+          <div class="class-time-pills">
+            <span>06:30 PM – 08:00 PM</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- GALLERY SHOWCASE -->
+<section class="section-shell gallery-v10" id="gallery">
+  <div class="container-xl-custom">
+    <div class="text-center reveal mb-5">
+      <div class="section-kicker justify-content-center">Gallery</div>
+      <h2 class="section-title mx-auto">A Closer Look At The MyGym Atmosphere.</h2>
+      <p class="section-subtext mx-auto">
+        Explore the training environment, guided sessions, and the energy that makes MyGym a place for real commitment and progress.
+      </p>
+    </div>
 
+    <div class="gallery-v10-grid">
+      <a href="gym1.jpg" class="gallery-v10-item gallery-v10-large glightbox reveal" data-gallery="mygym-v10" data-title="Strength Zone">
+        <img src="gym1.jpg" alt="Strength Zone">
+        <span>Strength Zone</span>
+      </a>
+
+      <a href="gym2.jpg" class="gallery-v10-item gallery-v10-tall glightbox reveal" data-gallery="mygym-v10" data-title="Gym Energy">
+        <img src="gym2.jpg" alt="Gym Energy">
+        <span>Gym Energy</span>
+      </a>
+
+      <a href="gym3.jpg" class="gallery-v10-item glightbox reveal" data-gallery="mygym-v10" data-title="Community Training">
+        <img src="gym3.jpg" alt="Community Training">
+        <span>Community Training</span>
+      </a>
+
+      <a href="yoga1.jpg" class="gallery-v10-item glightbox reveal" data-gallery="mygym-v10" data-title="Yoga Session">
+        <img src="yoga1.jpg" alt="Yoga Session">
+        <span>Yoga Session</span>
+      </a>
+
+      <a href="yoga2.jpg" class="gallery-v10-item glightbox reveal" data-gallery="mygym-v10" data-title="Wellness Practice">
+        <img src="yoga2.jpg" alt="Wellness Practice">
+        <span>Wellness Practice</span>
+      </a>
+
+      <a href="yoga3.jpg" class="gallery-v10-item glightbox reveal" data-gallery="mygym-v10" data-title="Cardio Movement">
+        <img src="yoga3.jpg" alt="Cardio Movement">
+        <span>Cardio Movement</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS / MEMBER EXPERIENCE -->
+<section class="section-shell testimonials-section" id="testimonials">
+  <div class="container-xl-custom">
+    <div class="text-center reveal mb-5">
+      <div class="section-kicker justify-content-center">Member Experience</div>
+      <h2 class="section-title mx-auto">Real Motivation. Real Consistency. Real Progress.</h2>
+      <p class="section-subtext mx-auto">
+        A strong gym experience is not just about equipment. It is about the atmosphere, the routine, and the support that helps members keep showing up.
+      </p>
+    </div>
+
+    <div class="results-strip">
+      <div class="result-pill glass-panel reveal">Discipline</div>
+      <div class="result-pill glass-panel reveal">Consistency</div>
+      <div class="result-pill glass-panel reveal">Energy</div>
+      <div class="result-pill glass-panel reveal">Results</div>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card glass-panel reveal">
+        <div class="testimonial-mark">“</div>
+        <h5>The environment keeps me motivated.</h5>
+        <p>
+          I joined to improve my fitness, but what made the biggest difference was the atmosphere. It helped me stay consistent week after week.
+        </p>
+        <span>— MyGym Member</span>
+      </div>
+
+      <div class="testimonial-card glass-panel reveal">
+        <div class="testimonial-mark">“</div>
+        <h5>The classes gave my routine more structure.</h5>
+        <p>
+          The yoga and cardio sessions helped me stay active in a more balanced way, not just with regular gym workouts.
+        </p>
+        <span>— MyGym Member</span>
+      </div>
+
+      <div class="testimonial-card glass-panel reveal">
+        <div class="testimonial-mark">“</div>
+        <h5>A great place to build discipline.</h5>
+        <p>
+          The opening hours and supportive environment made it easier for me to turn training into a routine.
+        </p>
+        <span>— MyGym Member</span>
+      </div>
+    </div>
+
+    <div class="featured-quote glass-panel reveal">
+      <p>“MyGym helped turn exercise into a real lifestyle, not just a short phase.”</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA BANNER -->
+<section class="section-shell final-cta-section">
+  <div class="container-xl-custom">
+    <div class="final-cta glass-panel reveal">
+      <div class="final-cta-glow"></div>
+      <div class="row align-items-center g-4 position-relative">
+        <div class="col-lg-8">
+          <span class="final-cta-label">Start Your Next Level</span>
+          <h2>Your Strongest Version Starts With One Decision.</h2>
+          <p>
+            Join MyGym Ragama and start building a stronger routine with the right environment, the right energy, and the right support.
+          </p>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="final-cta-actions">
+            <a href="#contact" class="btn-premium btn-premium-primary">Join Membership</a>
+            <a href="https://wa.me/94765519293?text=Hi%20MyGym!%20I%20want%20to%20join%20a%20membership." target="_blank" rel="noopener" class="btn-premium btn-premium-secondary">Message on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- CONTACT -->
-<section class="section-padding fade-section" id="contact">
-  <div class="container">
-    <h2 class="text-danger fw-bold text-center mb-4">Contact Us</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <form id="contactForm" class="needs-validation" novalidate>
-          <input type="text" name="name" class="form-control mb-3" placeholder="Your Name" required>
-          <div class="invalid-feedback mb-2">Please enter your name.</div>
+<section class="section-shell contact-v10" id="contact">
+  <div class="container-xl-custom">
+    <div class="text-center reveal mb-5">
+      <div class="section-kicker justify-content-center">Contact</div>
+      <h2 class="section-title mx-auto">Start Your Membership Journey.</h2>
+      <p class="section-subtext mx-auto">
+        Questions about plans, class timings, or gym access? Reach out and we’ll help you take the next step.
+      </p>
+    </div>
 
-          <input type="email" name="email" class="form-control mb-3" placeholder="Email" required>
-          <div class="invalid-feedback mb-2">Please enter a valid email.</div>
+    <div class="contact-grid">
+      <div class="contact-info-panel glass-panel reveal">
+        <div class="contact-info-block">
+          <span class="contact-mini-label">Visit Us</span>
+          <h4>69/F Siriwardana Road, Ragama</h4>
+          <p>Train in a disciplined environment designed for strength, consistency, and transformation.</p>
+        </div>
 
-          <textarea name="message" class="form-control mb-3" placeholder="Message" rows="5" required></textarea>
-          <div class="invalid-feedback mb-2">Please type a message.</div>
+        <div class="contact-info-block">
+          <span class="contact-mini-label">Call / WhatsApp</span>
+          <h4><a href="tel:+94765519293">+94 76 551 9293</a></h4>
+          <p>Get in touch directly for membership guidance, class details, and quick support.</p>
+        </div>
 
-          <button class="btn btn-danger w-100" type="submit">
-            <span class="spinner-border spinner-border-sm me-2 d-none" id="formSpinner" aria-hidden="true"></span>
+        <div class="contact-info-block">
+          <span class="contact-mini-label">Gym Hours</span>
+          <div class="contact-hours">
+            <div class="contact-hours-row">
+              <strong>Weekdays</strong>
+              <span>05:00 AM – 11:00 AM</span>
+              <span>04:00 PM – 10:00 PM</span>
+            </div>
+            <div class="contact-hours-row">
+              <strong>Saturday</strong>
+              <span>08:00 AM – 11:00 AM</span>
+              <span>04:00 PM – 08:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-actions">
+          <a href="https://wa.me/94765519293?text=Hi%20MyGym!%20I%20want%20to%20join%20a%20membership." target="_blank" rel="noopener" class="btn-premium btn-premium-primary">
+            Chat on WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=69/F%20Siriwardana%20Road,%20Ragama" target="_blank" rel="noopener" class="btn-premium btn-premium-secondary">
+            Get Directions
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form-panel glass-panel reveal">
+        <div class="contact-form-top">
+          <span class="contact-mini-label">Send Us a Message</span>
+          <h3>Let’s Talk About Your Fitness Goals.</h3>
+          <p>Fill out the form and we’ll guide you toward the right membership or training option.</p>
+        </div>
+
+        <form id="contactForm" class="contact-form-v10" novalidate>
+          <div class="form-field">
+            <input type="text" id="name" name="name" placeholder=" " required>
+            <label for="name">Name</label>
+            <small class="field-error">Please enter your name.</small>
+          </div>
+
+          <div class="form-field">
+            <input type="email" id="email" name="email" placeholder=" " required>
+            <label for="email">Email Address</label>
+            <small class="field-error">Please enter a valid email address.</small>
+          </div>
+
+          <div class="form-field">
+            <textarea id="message" name="message" rows="6" placeholder=" " required></textarea>
+            <label for="message">Your Message</label>
+            <small class="field-error">Please enter your message.</small>
+          </div>
+
+          <button class="btn-premium btn-premium-primary submit-btn-v10" type="submit">
+            <span class="spinner-border spinner-border-sm d-none" id="formSpinner" aria-hidden="true"></span>
             <span id="formBtnText">Send Message</span>
           </button>
-
-          <p class="text-muted small mt-3 mb-0">
-            Tip: Replace <code>yourFormID</code> with your Formspree ID to receive emails.
-          </p>
         </form>
 
-        <div class="alert alert-success mt-3 d-none" id="formSuccess">
-          ✅ Thanks! Your message has been sent.
-        </div>
-        <div class="alert alert-danger mt-3 d-none" id="formError">
-          ❌ Sorry — something went wrong. Try again or contact us on WhatsApp.
+        <div class="alert alert-success mt-4 d-none contact-alert" id="formSuccess">
+          Your message has been sent successfully. We’ll get back to you soon.
         </div>
 
+        <div class="alert alert-danger mt-4 d-none contact-alert" id="formError">
+          Something went wrong. Please try again or contact us on WhatsApp.
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-
 <!-- FLOATING WHATSAPP BUTTON -->
-<a class="wa-float" href="https://wa.me/94765519293?text=Hi%20My%20Gym!%20I%20want%20to%20join%20a%20membership." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+<a class="wa-float" href="https://wa.me/94765519293?text=Hi%20MyGym!%20I%20want%20to%20join%20a%20membership." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
     <path fill="#fff" d="M19.11 17.04c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.15-.42-2.19-1.35-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.41.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.47-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27 0 1.34.98 2.63 1.11 2.81.14.18 1.93 2.95 4.69 4.13.66.28 1.17.45 1.57.58.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32Z"/>
     <path fill="#fff" d="M26.67 5.33A14.92 14.92 0 0 0 16.02 1C7.86 1 1.23 7.64 1.23 15.8c0 2.61.68 5.16 1.98 7.41L1 31l7.98-2.1a14.75 14.75 0 0 0 7.04 1.79h.01c8.16 0 14.8-6.64 14.8-14.8 0-3.95-1.54-7.67-4.16-10.56Zm-10.65 22.7h-.01a12.25 12.25 0 0 1-6.25-1.72l-.45-.27-4.73 1.24 1.26-4.61-.29-.47a12.27 12.27 0 0 1-1.88-6.4c0-6.78 5.52-12.3 12.3-12.3 3.29 0 6.37 1.28 8.69 3.6a12.22 12.22 0 0 1 3.61 8.69c0 6.78-5.52 12.24-12.25 12.24Z"/>
   </svg>
 </a>
 
-
 <!-- FOOTER -->
-<footer class="bg-danger text-white text-center p-3">
-  © 2026 My Gym | Fitness & Wellness
+<footer class="footer-v10">
+  <div class="container-xl-custom">
+    <div class="footer-grid">
+      <div class="footer-brand reveal">
+        <span class="footer-brand-kicker">Premium Fitness Experience</span>
+        <h3>MyGym</h3>
+        <p>
+          A premium local fitness destination built around strength, discipline, and transformation.
+        </p>
+      </div>
+
+      <div class="footer-col reveal">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#standard">About</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#pricing">Membership</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col reveal">
+        <h5>Programs</h5>
+        <ul>
+          <li><a href="#programs">Strength Training</a></li>
+          <li><a href="#programs">Fat Loss</a></li>
+          <li><a href="#programs">Yoga & Meditation</a></li>
+          <li><a href="#programs">Zumba Cardio</a></li>
+          <li><a href="#programs">Personal Training</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col reveal">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="tel:+94765519293">+94 76 551 9293</a></li>
+          <li><a href="https://maps.google.com/?q=69/F%20Siriwardana%20Road,%20Ragama" target="_blank" rel="noopener">Ragama</a></li>
+          <li><a href="#schedule">Morning & Evening Sessions</a></li>
+          <li><a href="https://wa.me/94765519293?text=Hi%20MyGym!%20I%20want%20to%20join%20a%20membership." target="_blank" rel="noopener">WhatsApp Us</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom reveal">
+      <span>© 2026 MyGym</span>
+      <span>Built for discipline. Designed for transformation.</span>
+    </div>
+  </div>
 </footer>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-  const sections = document.querySelectorAll('.fade-section');
-
-  const revealOnScroll = () => {
-    const triggerBottom = window.innerHeight * 0.85;
-
-    sections.forEach(section => {
-      const boxTop = section.getBoundingClientRect().top;
-
-      if (boxTop < triggerBottom) {
-        section.classList.add('show');
-      }
-    });
-  };
-
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll();
-</script>
-
-
 <!-- GLightbox JS -->
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
 <script>
-  // Lightbox init
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.14 });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+</script>
+
+<script>
+  // GLightbox
   const lightbox = GLightbox({
     selector: '.glightbox',
     touchNavigation: true,
@@ -591,98 +854,103 @@ Join us today and start your transformation with MyGym Ragama!
 </script>
 
 <script>
-  document.getElementById("contactForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+  // premium contact form -> WhatsApp send
+  const contactForm = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+  const formError = document.getElementById('formError');
+  const formSpinner = document.getElementById('formSpinner');
+  const formBtnText = document.getElementById('formBtnText');
 
-    const name = document.querySelector('input[name="name"]').value;
-    const email = document.querySelector('input[name="email"]').value;
-    const message = document.querySelector('textarea[name="message"]').value;
+  if (contactForm) {
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
 
-    const text =
-      "Hi My Gym!%0A" +
-      "Name: " + name + "%0A" +
-      "Email: " + email + "%0A" +
-      "Message: " + message;
+    const setError = (field, hasError) => {
+      const formField = field.closest('.form-field');
+      if (!formField) return;
+      formField.classList.toggle('has-error', hasError);
+    };
 
-    const whatsappURL =
-      "https://wa.me/94765519293?text=" + text;
+    const validateEmail = (email) => {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    };
 
-    window.open(whatsappURL, "_blank");
-  });
-</script>
+    const validateForm = () => {
+      let valid = true;
 
-<script>
-  const toggle = document.getElementById("darkToggle");
-
-  // load saved mode
-  if (localStorage.getItem("darkMode") === "on") {
-    document.body.classList.add("dark-mode");
-  }
-
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-
-    if (document.body.classList.contains("dark-mode")) {
-      localStorage.setItem("darkMode", "on");
-    } else {
-      localStorage.setItem("darkMode", "off");
-    }
-  });
-</script>
-
-
-
-
-<!-- INTRO VIDEO SCRIPT -->
-<script>
-  (function () {
-    const intro = document.getElementById("intro");
-    const video = document.getElementById("introVideo");
-    const skipBtn = document.getElementById("skipBtn");
-
-    if (!intro || !video || !skipBtn) return;
-
-    const MIN_SHOW_MS = 1200;   // minimum time to keep intro visible
-    const FALLBACK_END_MS = 6500; // if autoplay blocked / error, hide after this
-
-    let startedAt = Date.now();
-    let hidden = false;
-
-    function hideIntro() {
-      if (hidden) return;
-      hidden = true;
-
-      const elapsed = Date.now() - startedAt;
-      const wait = Math.max(0, MIN_SHOW_MS - elapsed);
-
-      setTimeout(() => {
-        intro.classList.add("hide");
-        try { video.pause(); } catch (e) {}
-      }, wait);
-    }
-
-    // Hide when video ends
-    video.addEventListener("ended", hideIntro);
-
-    // Skip button
-    skipBtn.addEventListener("click", hideIntro);
-
-    // Try to autoplay (muted helps)
-    (async () => {
-      try {
-        await video.play();
-      } catch (e) {
-        // Autoplay blocked: let user control, still keep skip button
-        video.controls = true;
+      if (!nameInput.value.trim()) {
+        setError(nameInput, true);
+        valid = false;
+      } else {
+        setError(nameInput, false);
       }
-    })();
 
-    // Safety: never trap user on intro
-    setTimeout(hideIntro, FALLBACK_END_MS);
+      if (!validateEmail(emailInput.value)) {
+        setError(emailInput, true);
+        valid = false;
+      } else {
+        setError(emailInput, false);
+      }
 
-    // If video errors, hide intro
-    video.addEventListener("error", hideIntro);
-  })();
+      if (!messageInput.value.trim()) {
+        setError(messageInput, true);
+        valid = false;
+      } else {
+        setError(messageInput, false);
+      }
+
+      return valid;
+    };
+
+    [nameInput, emailInput, messageInput].forEach(field => {
+      field.addEventListener('input', () => {
+        if (field === emailInput) {
+          setError(field, !validateEmail(field.value) && field.value.trim() !== "");
+        } else {
+          setError(field, !field.value.trim());
+        }
+      });
+    });
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      formSuccess.classList.add('d-none');
+      formError.classList.add('d-none');
+
+      if (!validateForm()) return;
+
+      formSpinner.classList.remove('d-none');
+      formBtnText.textContent = 'Sending...';
+
+      try {
+        const name = encodeURIComponent(nameInput.value.trim());
+        const email = encodeURIComponent(emailInput.value.trim());
+        const message = encodeURIComponent(messageInput.value.trim());
+
+        const whatsappText =
+          `Hi MyGym!%0A%0AName: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+
+        setTimeout(() => {
+          window.open(`https://wa.me/94765519293?text=${whatsappText}`, '_blank');
+
+          formSpinner.classList.add('d-none');
+          formBtnText.textContent = 'Send Message';
+          formSuccess.classList.remove('d-none');
+          contactForm.reset();
+
+          document.querySelectorAll('.form-field').forEach(field => {
+            field.classList.remove('has-error');
+          });
+        }, 500);
+      } catch (error) {
+        formSpinner.classList.add('d-none');
+        formBtnText.textContent = 'Send Message';
+        formError.classList.remove('d-none');
+      }
+    });
+  }
 </script>
 
 </body>
